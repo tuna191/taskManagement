@@ -33,6 +33,11 @@ We replaced it with **Nodemailer**, which sends setup links and login verificati
 - Auth: Custom email-based login with access code (Owner) and password-based login (Employee)
 - Messaging: Socket.IO
 - Email: Nodemailer
+## Project Structure
+	•	backend/my-app-backend/: Contains the backend source code using Node.js/Express, Firebase, Socket.IO, and Nodemailer.
+	•	frontend/my-app/: Contains the frontend user interface built with Next.js, TailwindCSS, and Zustand.
+	•	.env: Environment variable file. It should be listed in .gitignore if it contains sensitive information.
+	•	README.md: Documentation with setup instructions, how to run the project, and deployment notes.
 
 ## Getting Started
 
