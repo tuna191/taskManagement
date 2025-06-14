@@ -58,7 +58,6 @@ const handleSubmit = async (e) => {
       });
     }
   } catch (error) {
-    setMessage(error.response?.data?.message || "Đăng nhập thất bại");
   }
 };
 
