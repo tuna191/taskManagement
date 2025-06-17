@@ -1,10 +1,11 @@
 import express from 'express';
-import { createAccessCode, validateAccessCode, createEmployee, deleteEmployee ,testconnectFirebase,getEmployee} from '../controllers/ownerController.js';
+import { createAccessCode, validateAccessCode, createEmployee, deleteEmployee ,testconnectFirebase,getEmployee,logOutOwner} from '../controllers/ownerController.js';
 
 const router = express.Router();
 
 router.post('/create-access-code', createAccessCode);
 router.post('/validate-access-code', validateAccessCode);
+router.post('/logoutOwner', logOutOwner);
 router.post('/create-employee', createEmployee);
 router.post('/get-employee', getEmployee);
 

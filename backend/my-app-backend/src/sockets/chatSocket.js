@@ -1,11 +1,6 @@
-// chatSocket.js
 const onlineUsers = new Map();
 
 let ioInstance = null;
-
-export const getReceiverSocketId = (receiverEmail) => {
-  return onlineUsers.get(receiverEmail);
-};
 
 
 const chatSocket = (io) => {

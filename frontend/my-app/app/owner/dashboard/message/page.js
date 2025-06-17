@@ -13,14 +13,14 @@ export default function MessagePage() {
   const [loading, setLoading] = useState(true);
   const { selectedUser } = useChatStore();
 
-  useEffect(() => {
-
-  
-      setLoading(false);
-    
-  }, [router]);
 
 useEffect(() => {
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    router.push("/owner/login");
+    return;
+  }
   const { authUser } = useAuthStore.getState();
   if (!authUser) return;
 
@@ -36,7 +36,6 @@ useEffect(() => {
     useChatStore.getState().unsubscribeFromMessages();
   };
 }, [useChatStore.getState().selectedUser]);
-
 
 
   return (

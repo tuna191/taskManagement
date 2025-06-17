@@ -7,10 +7,14 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+  if (!token) {
+    router.push("/owner/login");
+    return;
+  }
+   
     
-      setLoading(false); 
-    
-  }, [router]);
+  },);
 
   if (loading) {
     return <div className="text-center p-4">Checking login.</div>;

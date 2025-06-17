@@ -30,7 +30,11 @@ const fetchEmployees = async () => {
 };
 
   useEffect(() => {
-
+    const token = localStorage.getItem("token");
+  if (!token) {
+    router.push("/owner/login");
+    return;
+  }
       fetchEmployees();
       setLoading(false);
     

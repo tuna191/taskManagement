@@ -9,7 +9,7 @@ import {Select,SelectContent,SelectGroup,SelectItem,SelectLabel,SelectTrigger,Se
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
-
+import { useRouter } from "next/navigation";
 export default function TaskPage() {
   const [tasks, setTasks] = useState([]);
   const [date, setDate] = useState(new Date());
@@ -17,7 +17,7 @@ export default function TaskPage() {
   const [employeeValue, setEmployeeValue] = useState("");
   const [title, setTitle] = useState("");
   const total = tasks.length;
-
+  const router = useRouter();
   
   const fetchEmployees = async () => {
     const email = localStorage.getItem("email");
@@ -49,6 +49,11 @@ export default function TaskPage() {
     }
   }
    useEffect(() => {
+    const token = localStorage.getItem("token");
+  if (!token) {
+    router.push("/owner/login");
+    return;
+  }
     fetchEmployees();
     fetchTasks();
   }, []);

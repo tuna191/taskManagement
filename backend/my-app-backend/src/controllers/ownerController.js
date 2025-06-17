@@ -49,26 +49,6 @@ export const createAccessCode = async (req, res) => {
   }
 };
 
-export const testconnectFirebase = async (req, res) => {
-  try {
-    console.log('Connecting to Firebase...');
-    const testRef = doc(db, 'testCollection', 'testDoc');
-    await setDoc(testRef, { status: 'connected', timestamp: new Date().toISOString() });
-
-    const docSnap = await getDoc(testRef);
-
-    if (docSnap.exists()) {
-      res.status(200).json({ success: true, data: docSnap.data() });
-    } else {
-      res.status(404).json({ success: false, message: 'Không tìm thấy tài liệu' });
-    }
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-};
-
-
-
 export const validateAccessCode = async (req, res) => {
   const { email, accessCode } = req.body;
 
@@ -88,13 +68,18 @@ export const validateAccessCode = async (req, res) => {
 
     // Cập nhật document với đầy đủ fields
     await updateDoc(ownerRef, {
-      email, // Thêm email vào document data
+      email, 
       isVerified: true,
       lastVerifiedAt: new Date().toISOString() // Thêm trường mới
     });
 
+    const token = jwt.sign({ email, role: "owner" }, process.env.JWT_SECRET, {
+      expiresIn: "24h"
+    });
+
     res.json({
       success: true,
+      token,
       owner: {
         ...ownerData,
         email,
@@ -112,6 +97,16 @@ export const validateAccessCode = async (req, res) => {
     });
   }
 };
+
+export const logOutOwner = async (req, res) => {
+    try {
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log("Error in logout controller", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
 
 export const createEmployee = async (req, res) => {
   const { name, email, department, owner } = req.body;
@@ -165,3 +160,20 @@ export const deleteEmployee = async (req, res) => {
   }
 };
 
+export const testconnectFirebase = async (req, res) => {
+  try {
+    console.log('Connecting to Firebase...');
+    const testRef = doc(db, 'testCollection', 'testDoc');
+    await setDoc(testRef, { status: 'connected', timestamp: new Date().toISOString() });
+
+    const docSnap = await getDoc(testRef);
+
+    if (docSnap.exists()) {
+      res.status(200).json({ success: true, data: docSnap.data() });
+    } else {
+      res.status(404).json({ success: false, message: 'Không tìm thấy tài liệu' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};

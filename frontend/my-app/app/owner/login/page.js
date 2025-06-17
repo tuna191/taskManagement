@@ -43,10 +43,10 @@ export default function Login() {
           name: response.data.owner.name,
           isVerified: true,
         });
-
+        console.log("User authenticated:", response.data);
         localStorage.setItem("selectedRole", "owner");
         localStorage.setItem("email", email);
-
+        localStorage.setItem("token", response.data.token);
         useAuthStore.getState().connectSocket();
       console.log("Response from server:", response.data.owner.email);
 

@@ -13,7 +13,6 @@ const MessageInput = () => {
   const [isSocketReady, setIsSocketReady] = useState(false);
   const [isSending, setIsSending] = useState(false);
 
-  // Sử dụng trực tiếp authUser từ store thay vì localStorage
   const { 
     authUser, 
     socket, 
@@ -68,10 +67,7 @@ useEffect(() => {
       if (!receiver) {
         throw new Error("Không tìm thấy người nhận");
       }
-      console.log("Sending message from:", receiver);
 
-      console.log("Sending message to:", authUser.email);
-      console.log("Message text:", text.trim());
       await sendMessage({
         sender: authUser.email,
         receiver,

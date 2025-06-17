@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-
+import { useAuthStore } from "@/store/useAuthStore";
 const itemsOwner = [
   { title: "Manage Employee", url: "/owner/dashboard/manageEmployee" },
   { title: "Manage Task", url: "/owner/dashboard/task" },
@@ -23,7 +23,8 @@ const itemsEmployee = [
 ];
 
 export default function AppSidebar() {
-  const role = typeof window !== "undefined" ? localStorage.getItem("selectedRole") : "employee"; // fallback để tránh lỗi SSR
+  const { authUser } = useAuthStore();
+  const role = authUser?.role;
   const menuItems = role === "owner" ? itemsOwner : itemsEmployee;
 
   return (
@@ -39,7 +40,7 @@ export default function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link href={item.url}>
-                      <span>{item.title}</span>
+                      <span>{item?.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

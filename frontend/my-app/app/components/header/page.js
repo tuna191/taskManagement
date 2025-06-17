@@ -12,13 +12,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
+import { useAuthStore } from "@/store/useAuthStore";
 
 function HeaderPage() {
   const router = useRouter();
 
   const handleLogout = () => {
-    localStorage.clear(); 
+    useAuthStore.getState().logout();
     router.push("/"); 
   };
 

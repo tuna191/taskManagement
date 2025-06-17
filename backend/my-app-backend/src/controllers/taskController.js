@@ -72,10 +72,10 @@ export const getTask = async (req, res) => {
     let q;
 
     if (role === "employee") {
-      // Nhân viên: xem task được gán cho họ
+      
       q = query(collection(db, "tasks"), where("employeeEmail", "==", email));
     } else if (role === "owner") {
-      // Chủ: xem task mà mình giao cho các nhân viên
+      
       q = query(collection(db, "tasks"), where("ownerEmail", "==", email));
     } else {
       return res.status(400).json({ message: "Invalid role" });
